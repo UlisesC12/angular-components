@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
+import { ProductsService } from 'src/app/services/products.service';
 
 
 @Component({
@@ -8,43 +9,25 @@ import { StoreService } from 'src/app/services/store.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit{
   myShoppingCart: Product[] = [];
   total = 0;
 
-  products: Product[] = [
-    {
-      id: '1',
-      name: 'Juguete Saltarín',
-      price: 50,
-      image: './../assets/images/toy.png'
-    },
-    {
-        id: '2',
-        name: 'Jerry Peluche',
-        price: 80,
-        image: './../assets/images/jerry.png'
-    },
-    {
-        id: '3',
-        name: 'Bicicleta Maravilla',
-        price: 300,
-        image: './../assets/images/bike.png'
-    },
-    {
-      id: '4',
-      name: 'Libro Vivir de Las Fibras',
-      price: 45,
-      image: './../assets/images/libro.png'
-  }
-  ];
+  products: Product[] = [];
 
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService,
+    private productsService: ProductsService
   ) {
     this.myShoppingCart = this.storeService.getShoppingCart();
   }
 
+  ngOnInit(): void {
+    this.productsService.getAllProducts()
+      .subscribe(data => {
+        this.products = data;
+      });
+  }
   
 
   onAddToShoppingCart(product: Product) {
@@ -52,3 +35,7 @@ export class ProductsComponent {
     this.total = this.storeService.getTotal();
   }
 }
+function subscribe(arg0: (data: any) => void) {
+  throw new Error('Function not implemented.');
+}
+
