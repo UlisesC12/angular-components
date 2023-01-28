@@ -10,7 +10,7 @@ export class NavComponent implements OnInit {
   activeMenu = false;
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
   toggleMenu() {
